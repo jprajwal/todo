@@ -15,15 +15,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.contrib.auth import views as auth_views
+from django.urls import include, path
+
 from todo import views
 
 urlpatterns = [
-    #####################home_page###########################################
     path('', views.index, name="todo"),
-    ####################give id no. item_id name or item_id=i.id ############
-    # pass item_id as primary key to remove that the todo with given id
     path('del/<str:item_id>', views.remove, name="del"),
-    ########################################################################
     path('admin/', admin.site.urls),
+    path('accounts/', include('accounts.urls')),
+    path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]

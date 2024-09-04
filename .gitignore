@@ -1,3 +1,5 @@
 .python-version
 .venv
 __pycache__
+*.sqlite3
+django-notes.txt
