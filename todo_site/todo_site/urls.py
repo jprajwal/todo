@@ -21,10 +21,18 @@ from django.urls import include, path
 from todo import views
 
 urlpatterns = [
-    path('', views.index, name="todo"),
-    path('del/<str:item_id>', views.remove, name="del"),
+    path('', views.HomeView.as_view(), name="home"),
+    path('todo/', views.TodoView.as_view(), name="todo"),
+    path('todo/del/<str:item_id>', views.TodoDeleteByIdView.as_view(), name="del"),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
-    path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
+    path(
+        'login/',
+        auth_views.LoginView.as_view(
+            template_name='registration/login.html',
+            redirect_authenticated_user=True
+        ),
+        name='login'
+    ),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 ]
